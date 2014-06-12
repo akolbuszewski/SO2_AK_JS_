@@ -48,3 +48,108 @@ public class Zasob {
         return sumaPrzemieszczen;
     }
     
+    public int SSTF(ArrayList<Integer> odwolania){
+        int sumaPrzemieszczen = 0;
+        int indeksNajblizszego = 0;
+        int przechowanyIndeks = 0;
+        int najkrotszaOdleglosc = 101;
+        ArrayList <Integer> odwiedzone = new ArrayList<>();
+        //za każdym razem sprawdź, gdzie masz najbliżej
+        //zacznasz od 50. sprawdz, gdzie masz najblizej
+        for(int i=0; i<odwolania.size(); i++){
+            if (abs(50-odwolania.get(i))<najkrotszaOdleglosc){
+                najkrotszaOdleglosc = abs(50-odwolania.get(i));
+                indeksNajblizszego = i;
+            }  
+        }
+        
+        sumaPrzemieszczen+=najkrotszaOdleglosc;
+        //System.out.println("Dodano "+najkrotszaOdleglosc);
+        odwiedzone.add(odwolania.get(indeksNajblizszego));
+        przechowanyIndeks = indeksNajblizszego;
+        najkrotszaOdleglosc = 101;
+        
+        while (odwiedzone.size()<odwolania.size()){
+            for(int i=0; i<odwolania.size(); i++){
+                if (odwiedzone.contains(odwolania.get(i))==false){ //spośród nieodwiedzonych
+                    if (abs(odwolania.get(przechowanyIndeks)-odwolania.get(i))<najkrotszaOdleglosc){ //znajdz najblizszego
+                        najkrotszaOdleglosc = abs(odwolania.get(przechowanyIndeks)-odwolania.get(i));
+                        indeksNajblizszego = i;
+                    }//if
+                 }//if 
+             }//for
+            sumaPrzemieszczen+=najkrotszaOdleglosc;
+            //System.out.println("Dodano "+najkrotszaOdleglosc);
+            odwiedzone.add(odwolania.get(indeksNajblizszego));
+            przechowanyIndeks = indeksNajblizszego;
+            najkrotszaOdleglosc = 101;   
+        }//while
+        //dla kazdego: sprawdz, gdzie masz najblizej, z nieodwiedzonych
+
+        
+        return sumaPrzemieszczen;
+    }
+
+    public int SCAN(ArrayList<Integer> odwolania){
+        int sumaPrzemieszczen = 0;
+        ArrayList<Integer> mniejsze = new ArrayList<>();
+        ArrayList<Integer> wieksze = new ArrayList<>();
+
+        for (Integer i : odwolania){
+            if (i<=50){
+                mniejsze.add(i);
+            } else {
+                wieksze.add(i);
+            }   
+        }
+        
+        Collections.sort(mniejsze);
+        Collections.sort(wieksze);
+        
+        sumaPrzemieszczen += 50-mniejsze.get(mniejsze.size()-1);
+        
+        for (int i=mniejsze.size()-1; i>0; i--){
+           sumaPrzemieszczen+=mniejsze.get(i)-mniejsze.get(i-1);
+        }
+        
+        sumaPrzemieszczen+=mniejsze.get(0)+wieksze.get(0);
+        
+        for (int i=1; i<wieksze.size(); i++){
+           sumaPrzemieszczen+=wieksze.get(i)-wieksze.get(i-1);
+        }
+        
+        
+        return sumaPrzemieszczen;
+    }
+    
+    public int CSCAN(ArrayList<Integer> odwolania){
+        int sumaPrzemieszczen = 0;
+        ArrayList<Integer> mniejsze = new ArrayList<>();
+        ArrayList<Integer> wieksze = new ArrayList<>();
+
+        for (Integer i : odwolania){
+            if (i<=50){
+                mniejsze.add(i);
+            } else {
+                wieksze.add(i);
+            }   
+        }
+        
+        Collections.sort(mniejsze);
+        Collections.sort(wieksze);
+        
+        sumaPrzemieszczen += 50-mniejsze.get(mniejsze.size()-1);
+        
+        for (int i=mniejsze.size()-1; i>0; i--){
+           sumaPrzemieszczen+=mniejsze.get(i)-mniejsze.get(i-1);
+        }
+        
+        sumaPrzemieszczen+=mniejsze.get(0)+(100-wieksze.get(wieksze.size()-1));
+        
+        for (int i=wieksze.size()-1; i>0; i--){
+           sumaPrzemieszczen+=wieksze.get(i)-wieksze.get(i-1);
+        }
+        
+         
+        return sumaPrzemieszczen;
+    }
