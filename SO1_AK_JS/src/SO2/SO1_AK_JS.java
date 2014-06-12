@@ -1,9 +1,9 @@
 /*
- *Zadanie pierwsze kursu Systemy Operacyjne, 2014 PWr
+ *Zadanie drugie kursu Systemy Operacyjne, 2014 PWr
  * Aleksander Kolbuszewski, Janek Szynal  
  */
 
-package SO2;
+package so1_ak_js;
 
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
@@ -13,7 +13,7 @@ import java.util.Scanner;
  *
  * @author Janek
  */
-public class SO1_AK_JS {
+public class SO2_AK_JS {
     
     
     
@@ -24,51 +24,43 @@ public class SO1_AK_JS {
      */
     public static void main(String[] args) throws FileNotFoundException {
         Zasob zas = new Zasob();
-        startMenu(zas.zPliku());
+        startMenu(zas.stworzListe());
        
     }
     
-    private static void startMenu(ArrayList<Proces> procesy) throws FileNotFoundException{
-            System.out.println("* * *");
+    private static void startMenu(ArrayList<Integer> odwolania) throws FileNotFoundException{
+            System.out.println("\n* * *");
             System.out.println("Wybierz naciskajac klawisz cyfry, a nastepnie potwierdź enterem:");
-            System.out.println("1 - Wyświetl listę procesów");
-            System.out.println("2 - Wczytaj nową listę procesów");
-            System.out.println("3 - Przedstaw statystyki");
-            System.out.println("4 - Zakończ");
+            System.out.println("1 - Wyświetl listę odwołań"); //OK
+            System.out.println("2 - Stwórz nową listę odwołań"); //test GEN
+            System.out.println("3 - Przedstaw statystyki"); 
+            System.out.println("4 - Zakończ"); //OK
 
             //MENU
             Scanner scn = new Scanner(System.in);
 
             switch (scn.nextInt()) {
             case 1: 
-                    int momentZgloszenia=0;
-                    for (Proces p : procesy){
-                        p.wypisz();                      
+                    System.out.println("Lista odwołań:");
+                    for (Integer i : odwolania){
+                        System.out.print(i+" ");
                     }
-                    System.out.println("ilosc procesow = "+procesy.size());
-                    startMenu(procesy);
+                    startMenu(odwolania);
                     break;
-            case 2:
+            case 2: //stworzliste
                     Zasob zas = new Zasob();
-                    startMenu(zas.zPliku());
+                    startMenu(zas.stworzListe());
                     break;
-
-            case 3:
-                    Zasob zas2 = new Zasob();   
-
-                    System.out.println("Podaj kwant czasu dla algorytmu rotacyjnego: ");
-                    //zas2.runAlgs(procesy, scn.nextInt());
-               
-                    zas2.RR(procesy, scn.nextInt());
-                    zas2.SJFW(procesy);
-                    zas2.SJF(procesy);
-                    zas2.FCFS(procesy);
-
-                    startMenu(procesy);
+            case 3: //stats
+                    Zasob zas2 = new Zasob();
+                    System.out.println("FCFS: "+zas2.FCFS(odwolania));
+                    System.out.println("SSTF: "+zas2.SSTF(odwolania));
+                    System.out.println("SCAN: "+zas2.SCAN(odwolania));
+                    System.out.println("C-SCAN: "+zas2.CSCAN(odwolania));
+                    startMenu(odwolania);
                     break;
             
             case 4:
-    
                     break;
             }
 
